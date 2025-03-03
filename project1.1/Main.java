@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -59,16 +60,16 @@ public class Main {
             return node;
         }
 
-        // Function to delete a node with a given key
-        private Node delete(Node curr, int key) {
+        // Function to remove a node with a given key
+        private Node remove(Node curr, int key) {
             if (curr == null) return null;
             
             if (key == root.key) { return removeRoot(root); }
 
             if (key < curr.key) {
-                curr.left = delete(curr.left, key);
+                curr.left = remove(curr.left, key);
             } else if (key > curr.key) {
-                curr.right = delete(curr.right, key);
+                curr.right = remove(curr.right, key);
             } else {
                 // Node found
                 // If node only has one child:
@@ -78,7 +79,7 @@ public class Main {
                 // Replace with successor if node has two children
                 Node successor = findMin(curr.right);
                 curr.key = successor.key;
-                curr.right = delete(curr.right, successor.key);
+                curr.right = remove(curr.right, successor.key);
             }
         
             return curr;
@@ -99,7 +100,7 @@ public class Main {
             // Case 3: Root has two children
             Node successor = findMin(curr.right);  // Get in-order successor
             curr.key = successor.key;              // Replace root with successor value
-            curr.right = delete(root.right, successor.key); // Delete successor
+            curr.right = remove(root.right, successor.key); // remove successor
         
             return root;
         }
@@ -190,7 +191,7 @@ public class Main {
 
         System.out.println("\n1. Create a binary search tree\n");
         System.out.println("2. Add a node\n");
-        System.out.println("3. Delete a node\n");
+        System.out.println("3. remove a node\n");
         System.out.println("4. Print nodes by In-order\n");
         System.out.println("5. Print nodes by Pre-order\n");
         System.out.println("6. Print nodes by Post-order\n");
@@ -211,11 +212,50 @@ public class Main {
                 Integer input = scnr.nextInt();
 
                 switch (input) {
+                    // Interface for tree creation
                     case 1: 
                     if (created) { System.out.println("\nTree already created."); break; }
                         created = true;
                         System.out.println("\nTree successfully created.");
                         displayMenu(); // Display Menu
+                        break;
+                    // Interface for adding nodes to the tree
+                    case 2:
+                        if (!created) { System.out.println("\nTree not created yet. Enter '1'."); break; }
+                        Integer numToAdd;
+
+                        while (true) {
+                            try {
+                                System.out.print("\nType number to enter into tree: ");
+                                numToAdd = scnr.nextInt();
+                                break;
+                            } catch (Exception InputMismatchException) {
+                                System.out.println("\nNot a valid number.");
+                            }
+                        }
+
+                        tree.root = tree.add(tree.root, numToAdd);
+                        System.out.printf("\n%d has successfully been added to the tree.\n", numToAdd);
+                        displayMenu();
+                        break;
+                    // Interface for removing nodes
+                    case 3:
+                        if (!created) { System.out.println("\nTree not created yet. Enter '1'."); break; }
+                        Integer numToRemove;
+
+                        while (true) {
+                            try {
+                                System.out.print("\nType number to delete from the tree: ");
+                                numToRemove = scnr.nextInt();
+                                break;
+                            } catch (Exception InputMismatchException) {
+                                System.out.println("\nNot a valid number.");
+                            }
+                        }
+
+                        tree.root = tree.remove(tree.root, numToRemove);
+                        System.out.printf("\n%d has successfully been removed from the tree.\n", numToRemove);
+                        displayMenu();
                         break;
                     case 4: 
                         if (!created) { System.out.println("\nTree not created yet. Enter '1'."); break; }
