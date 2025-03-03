@@ -189,7 +189,7 @@ public class Main {
 
         System.out.println("\n1. Create a binary search tree\n");
         System.out.println("2. Add a node\n");
-        System.out.println("3. remove a node\n");
+        System.out.println("3. Remove a node\n");
         System.out.println("4. Print nodes by In-order\n");
         System.out.println("5. Print nodes by Pre-order\n");
         System.out.println("6. Print nodes by Post-order\n");
