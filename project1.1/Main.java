@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    //First, create a Node class
+    // Node class
     public static class Node {
         //The left and right child of the current node are created,
         //as well as the current node and its key value
@@ -14,13 +14,11 @@ public class Main {
         }
     }
      
-    public static class BinaryTree {
-        // Root
-        Node root;
-        ArrayList<Integer> preOrderList;
-        ArrayList<Integer> postOrderList;
+    public static class BinaryTree { 
+        Node root; // Root
+        ArrayList<Integer> order; // List used to print tree contents to the terminal
 
-        //constructor
+        // Constructor method
         BinaryTree() {
             root = new Node(4);
             root.left = new Node(2);
@@ -29,10 +27,11 @@ public class Main {
             root.right = new Node(6);
             root.right.left = new Node(5);
             root.right.right = new Node(7);
-            preOrderList = new ArrayList<>();
-            postOrderList = new ArrayList<>();
+            order = new ArrayList<>();
+            order = new ArrayList<>();
         }
 
+        // Function to add a node to the tree
         public Node add(Node curr, int key) {
             if (curr == null) {
                 Node newNode = new Node(key);
@@ -47,16 +46,6 @@ public class Main {
             }
 
             return curr;
-        }
-
-
-
-        // Helper function to find the smallest node in a subtree
-        private Node findMin(Node node) {
-            while (node.left != null) {
-                node = node.left;
-            }
-            return node;
         }
 
         // Function to remove a node with a given key
@@ -108,13 +97,13 @@ public class Main {
         // Prints tree contents in order
         public void printInOrder() {
             // Update preOrderedList to correctly sort
-            preOrderList.clear();
-            updatePreOrder(root);
-            int[] sorted = new int[preOrderList.size()];
+            order.clear();
+            updateOrder(root, 1);
+            int[] sorted = new int[order.size()];
 
             // Copy array list into array to sort within
-            for (int i = 0; i < preOrderList.size(); i++) {
-                sorted[i] = preOrderList.get(i);
+            for (int i = 0; i < order.size(); i++) {
+                sorted[i] = order.get(i);
             }
 
             // Sort array using bubble sort
@@ -140,56 +129,60 @@ public class Main {
 
         // Prints tree contents in pre-order
         public void printPreOrder() {
-            preOrderList.clear();  // Clear before updating
-            updatePreOrder(root);  // Update preOrderList
+            order.clear();  // Clear before updating
+            updateOrder(root, 1);  // Update order
 
             System.out.println("\nPre-order Traversal: ");
             // Print each element in pre-ordered list
-            for (int num : preOrderList) {
+            for (int num : order) {
                 System.out.print(num + " ");
             }
             System.out.println();
-        }
-
-        // Helper function for pre-ordering
-        private void updatePreOrder(Node curr) {
-            if (curr == null) return;  // Base case for recursion
-
-            preOrderList.add(curr.key);  // Add current node (parent)
-            updatePreOrder(curr.left);  // Visit left child
-            updatePreOrder(curr.right); // Visit right child
-
         }
 
         // Prints tree contents in post-order
         public void printPostOrder() {
-            postOrderList.clear();  // Clear before updating
-            updatePostOrder(root);  // Update
+            order.clear();  // Clear before updating
+            updateOrder(root, 2);  // Update
 
             System.out.println("\nPost-order Traversal: ");
             // Print each element in post-ordered list
-            for (int num : postOrderList) {
+            for (int num : order) {
                 System.out.print(num + " ");
             }
             System.out.println();
         }
 
-        // Helper function for post-ordering
-        private void updatePostOrder(Node curr) {
+        // Helper function for ordering
+        private void updateOrder(Node curr, int code) {
             if (curr == null) return;  // Base case for recursion
 
-            updatePostOrder(curr.left);  // Visit left child
-            updatePostOrder(curr.right); // Visit right child
+            if (code == 1) { // Code 1 means pre-order
+                order.add(curr.key);  // Add current node (parent)
+                updateOrder(curr.left, 1);  // Visit left child
+                updateOrder(curr.right, 1); // Visit right child
+            }
 
-            postOrderList.add(curr.key);  // Add parent after visiting children
+            if (code == 2) { // Code 2 means post-order
+                updateOrder(curr.left, 2);  // Visit left child
+                updateOrder(curr.right, 2); // Visit right child
+                order.add(curr.key);  // Add parent after visiting children
+            }
         }
 
+        // Helper function to find the smallest node in a subtree
+        private Node findMin(Node node) {
+            while (node.left != null) {
+                node = node.left;
+            }
+            return node;
+        }
     }
 
     // Menu Display
     public static void displayMenu() {
         try {
-            Thread.sleep(2500);
+            Thread.sleep(2500); // Used to create a delay for the menu to print
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
