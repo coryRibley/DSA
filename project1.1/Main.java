@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -85,6 +84,7 @@ public class Main {
             return curr;
         }
 
+        // Function to handle removing a node when it's the root of the tree
         public Node removeRoot(Node curr) {
             if (curr == null) return null;
         
@@ -105,6 +105,7 @@ public class Main {
             return root;
         }
 
+        // Prints tree contents in order
         public void printInOrder() {
             // Update preOrderedList to correctly sort
             preOrderList.clear();
@@ -137,6 +138,7 @@ public class Main {
             System.out.println();
         }
 
+        // Prints tree contents in pre-order
         public void printPreOrder() {
             preOrderList.clear();  // Clear before updating
             updatePreOrder(root);  // Update preOrderList
@@ -149,6 +151,7 @@ public class Main {
             System.out.println();
         }
 
+        // Helper function for pre-ordering
         private void updatePreOrder(Node curr) {
             if (curr == null) return;  // Base case for recursion
 
@@ -158,6 +161,7 @@ public class Main {
 
         }
 
+        // Prints tree contents in post-order
         public void printPostOrder() {
             postOrderList.clear();  // Clear before updating
             updatePostOrder(root);  // Update
@@ -170,6 +174,7 @@ public class Main {
             System.out.println();
         }
 
+        // Helper function for post-ordering
         private void updatePostOrder(Node curr) {
             if (curr == null) return;  // Base case for recursion
 
@@ -211,16 +216,14 @@ public class Main {
                 System.out.print("Input: ");
                 Integer input = scnr.nextInt();
 
-                switch (input) {
-                    // Interface for tree creation
-                    case 1: 
+                switch (input) { // Allows users to...
+                    case 1: // "create" a binary search tree
                     if (created) { System.out.println("\nTree already created."); break; }
                         created = true;
                         System.out.println("\nTree successfully created.");
-                        displayMenu(); // Display Menu
+                        displayMenu();
                         break;
-                    // Interface for adding nodes to the tree
-                    case 2:
+                    case 2: // add nodes to the tree
                         if (!created) { System.out.println("\nTree not created yet. Enter '1'."); break; }
                         Integer numToAdd;
 
@@ -238,8 +241,7 @@ public class Main {
                         System.out.printf("\n%d has successfully been added to the tree.\n", numToAdd);
                         displayMenu();
                         break;
-                    // Interface for removing nodes
-                    case 3:
+                    case 3: // remove nodes from the tree
                         if (!created) { System.out.println("\nTree not created yet. Enter '1'."); break; }
                         Integer numToRemove;
 
@@ -257,22 +259,22 @@ public class Main {
                         System.out.printf("\n%d has successfully been removed from the tree.\n", numToRemove);
                         displayMenu();
                         break;
-                    case 4: 
+                    case 4: // print tree contents in-order
                         if (!created) { System.out.println("\nTree not created yet. Enter '1'."); break; }
                         tree.printInOrder();
                         displayMenu(); // Display Menu
                         break;
-                    case 5: 
+                    case 5: // print tree contents in pre-order
                         if (!created) { System.out.println("\nTree not created yet. Enter '1'."); break; }
                         tree.printPreOrder();
                         displayMenu(); // Display Menu
                         break;
-                    case 6: 
+                    case 6: // print tree contents in post-order
                         if (!created) { System.out.println("\nTree not created yet. Enter '1'."); break; }
                         tree.printPostOrder();
                         displayMenu(); // Display Menu
                         break;
-                    case 7:
+                    case 7: // exit the program
                         System.out.println("\nExiting Program...");
                         scnr.close();
                         System.exit(0);
